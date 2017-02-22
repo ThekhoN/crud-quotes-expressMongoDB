@@ -2,8 +2,13 @@ var express = require('express')
 var app = express()
 
 //middleware
+app.use('/static', express.static('public'))
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}))
+
+//views
+app.set('views', __dirname + '/public/views')
+app.set('view engine', 'pug')
 
 //db
 var db
@@ -21,11 +26,18 @@ MongoClient.connect('mongodb://thekho:user-quotes@ds157539.mlab.com:57539/user-q
 })
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html')
+  db.collection('quotes').find().toArray(function (err, results) {
+    if(err){
+      console.log('error in db find results: ', err);
+    }
+    else {
+        //console.log('results: ', results)
+        res.render('index', {quotes: results})
+    }
+  })
 })
 
 app.post('/quotes', function (req, res) {
-  //res.send('handling GET req for /quotes route');
   db.collection('quotes').save(req.body, function (err, result) {
     if(err){
       console.log('error in post to database, route: /quotes...');

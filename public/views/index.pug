@@ -1,0 +1,19 @@
+html
+   head
+    link(rel='stylesheet', href='/static/src/css/style.css')
+body
+  div.formContainer
+    form(action="/quotes",method="POST")
+      label(for='name')
+        input(type='text', placeholder='name', name='name')
+      label(for='quote')
+        input(type='text', placeholder='quote', name='quote')
+      button(type='submit') Submit
+  div.quoteContainer
+    h2 Quotes:
+    ul
+     for quote in quotes
+       li
+         span.name= quote.name
+         br
+         span.quote= quote.quote
