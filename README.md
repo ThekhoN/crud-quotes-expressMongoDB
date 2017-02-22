@@ -1,5 +1,5 @@
 # crud-quotes-expressMongoDB
-simple CRUD quotes page using: 
+A Simple CRUD quotes page using:<br/> 
 express(server)<br/>
 pug(templating)<br/>
 mongolabs(storage)<br/>
